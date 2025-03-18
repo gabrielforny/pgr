@@ -11,10 +11,16 @@ USERNAME = os.getenv("USERNAME")
 stop_threads = False  # Global control variable to stop threads
 
 ####### FILE PATHS #######
-file_base_rtf = f"C:\\Users\\{USERNAME}\\Downloads\\teste-pgr\\files\\teste-novo\\NOVEMBRO 2024 - PGR - JUMA ALIMENTOS LTDA.rtf"
-pgr_modelo = f"C:\\Users\\{USERNAME}\\Downloads\\teste-pgr\\files\\teste-novo\\NOVO MODELO PGR.docx"
-pgr_destino = f"C:\\Users\\{USERNAME}\\Downloads\\teste-pgr\\files\\teste-novo\\nome_arquivo_novo.docx"
-pdf_path = f"C:\\Users\\{USERNAME}\\Downloads\\teste-pgr\\files\\27.11.2024 - AEP - T.J. ALIMENTOS LTDA - COZINHA GERAL.pdf"
+caminho_file_base_rtf = f"C:\\Users\\{USERNAME}\\tecnico\\PGR-GRO\\FORMATAÇÃO\\TEMPLATE\\ROBO_PGR"
+caminho_pgr_modelo = f"C:\\Users\\{USERNAME}\\tecnico\\PGR-GRO\\FORMATAÇÃO\\TEMPLATE\\ROBO_PGR\\MODELO"
+pgr_destino = f"C:\\Users\\{USERNAME}\\tecnico\\PGR-GRO\\00 - RENOVADOS 2024\\nome_arquivo_novo.docx"
+caminho_pdf_path = f"C:\\Users\\{USERNAME}\\tecnico\\PGR-GRO\\FORMATAÇÃO\\PGR"
+
+#QUANDO FOR SUBIR PARA O CLIENTE"
+# caminho_file_base_rtf = f"\\192.168.0.2\\tecnico\\PGR - GRO\\FORMATAÇÃO\\TEMPLATE\\ROBO_PGR"
+# caminho_pgr_modelo = f"\\192.168.0.2\\tecnico\\PGR - GRO\\FORMATAÇÃO\\TEMPLATE\\ROBO_PGR\\MODELO"
+# pgr_destino = f"\\192.168.0.2\\tecnico\\PGR-GRO\\00 - RENOVADOS 2024\\nome_arquivo_novo.docx"
+# caminho_pdf_path = f"\\192.168.0.2\\tecnico\\PGR-GRO\\FORMATAÇÃO\\PGR"
 
 # Function to kill Word processes
 def matar_word():
@@ -48,6 +54,33 @@ def iniciar_processo():
     progress_label.config(text="Iniciando o processamento...")
     root.update()  # Update the Tkinter interface
 
+    file_base_rtf = [f for f in os.listdir(caminho_file_base_rtf) if f.endswith('.rtf')]
+    
+    pgr_modelo = [f for f in os.listdir(caminho_pgr_modelo) if f.endswith('.docx')]
+    
+    pdf_path = [f for f in os.listdir(caminho_pdf_path) if f.endswith('.pdf')]
+    
+    if not file_base_rtf:
+        progress_label.config(text="Nenhum arquivo RTF encontrado na pasta especificada.")
+        raise ValueError("Nenhum arquivo RTF encontrado na pasta especificada.")
+    else:
+        file_base_rtf = caminho_file_base_rtf + "\\" + file_base_rtf[0]
+        progress_label.config(text=f"Arquivo {file_base_rtf[0]} encontrado")
+        
+    if not pgr_modelo:
+        progress_label.config(text="Nenhum arquivo DOCX encontrado na pasta MODELOS.")
+        raise ValueError("Nenhum arquivo DOCX encontrado na pasta MODELOS.")
+    else:
+        pgr_modelo = caminho_pgr_modelo + "\\" + pgr_modelo[0]
+        progress_label.config(text=f"Arquivo {pgr_modelo[0]} encontrado")
+        
+    if not pdf_path:
+        progress_label.config(text="Nenhum arquivo DOCX encontrado na pasta PGR.")
+        raise ValueError("Nenhum arquivo DOCX encontrado na pasta PGR.")
+    else:
+        pdf_path = caminho_pdf_path + "\\" + pdf_path[0]
+        progress_label.config(text=f"Arquivo {pdf_path[0]} encontrado")
+    
     try:
         # Step 1: Process the documents
         progress_label.config(text="Processando documentos PGR...")

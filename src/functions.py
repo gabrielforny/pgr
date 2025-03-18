@@ -6,11 +6,9 @@ import pypandoc
 pypandoc.download_pandoc()
 
 from io import StringIO
-from datetime import datetime
 import locale, time
 import pythoncom
 import os
-import pywintypes
 from docx.oxml import OxmlElement
 from docx.oxml.ns import qn
 
@@ -19,14 +17,9 @@ locale.setlocale(locale.LC_ALL, 'pt_BR.utf8')
 import psutil
 import subprocess
 import requests
-import traceback
-
-# from ahk import AHK 
-# ahk = AHK()
 
 import pygetwindow as gw
 
-import win32com.client as win32
 import pyautogui as p
 
 import fitz  # PyMuPDF
@@ -35,6 +28,15 @@ from docx.shared import Inches
 from docx import Document
 import re
 import pypandoc
+
+import os
+import pythoncom
+import traceback
+
+import win32com.client as win32
+import pywintypes
+import pyautogui
+import win32clipboard
 
 def kill_process_word():
     process_name = "WINWORD"
@@ -98,43 +100,6 @@ def paste_content_to_new_document(file_docx_result, search_text):
     word.Quit()
 
     print('Conteúdo colado com sucesso no novo documento!')
-
-
-from datetime import datetime
-import os
-import pythoncom
-import traceback
-import win32com.client as win32
-import pywintypes
-
-from datetime import datetime
-import os
-import pythoncom
-import traceback
-import win32com.client as win32
-import pywintypes
-
-from datetime import datetime
-import os
-import pythoncom
-import traceback
-import win32com.client as win32
-import pywintypes
-
-from datetime import datetime
-import os
-import pythoncom
-import traceback
-import win32com.client as win32
-import pywintypes
-
-from datetime import datetime
-import os
-import pythoncom
-import traceback
-import win32com.client as win32
-import pywintypes
-import pyautogui
 
 def formatar_e_inserir_conteudo_direto(file_base_rtf, pgr_destino):
     pythoncom.CoInitialize()  # Inicializa o COM apenas uma vez para o processo inteiro
@@ -391,11 +356,17 @@ def copiar_plano_de_acao(file_base_rtf, pgr_destino):
             print("'INFO_PLANO DE AÇÃO' encontrado no arquivo de destino. Substituindo conteúdo.")
             destino_range = find_destino.Parent
             destino_range.Text = "" 
+            time.sleep(3)
 
-            destino_range.PasteSpecial(DataType=2) 
+            try:
+                print("Tentando colar com PasteSpecial...")
+                destino_range.Paste()
+            except pywintypes.com_error:
+                print("PasteSpecial falhou, tentando Paste normal...")
+                destino_range.PasteSpecial(DataType=22)
                 
             time.sleep(1) 
-            print("Conteúdo colado com sucesso.")
+            print("Conteúdo colado com sucesso. - PLANO DE AÇÃO")
 
             # Quebrar em novas páginas sempre que encontrar "NR" ou "Treinamento"
             paragraphs = doc_destino.Paragraphs
@@ -411,7 +382,7 @@ def copiar_plano_de_acao(file_base_rtf, pgr_destino):
                     continue  # Pula para o próximo parágrafo
                 
                 # Verificar se encontramos "NR" ou "Treinamento"
-                if text.startswith("NR") or text.startswith("Treinamento"):
+                if (text.startswith("NR") or text.startswith("Treinamento")) and text != "Treinamento e competência":
                     # Se for o primeiro "NR" ou "Treinamento" após "Atividade", não quebra a página
                     if found_atividade and not skip_first_break:
                         skip_first_break = True  # Marca que o próximo "NR" ou "Treinamento" não vai quebrar a página
@@ -453,7 +424,7 @@ def copiar_inventario_via_range(file_base_rtf, pgr_destino, nome_empresa):
 
         unidade_account = 0
         find = doc_rtf.Content.Find
-        find.Text = nome_empresa
+        find.Text = "Caracterização"
         find.MatchCase = False
         ranges = []
         
@@ -490,7 +461,7 @@ def copiar_inventario_via_range(file_base_rtf, pgr_destino, nome_empresa):
 
         # Copiar o conteúdo selecionado
         content_range.Copy()
-        print("Conteúdo copiado com sucesso.")
+        print("Conteúdo copiado com sucesso. - Inventário de riscos")
 
         # Fechar o arquivo RTF
         doc_rtf.Close(False)
@@ -508,9 +479,16 @@ def copiar_inventario_via_range(file_base_rtf, pgr_destino, nome_empresa):
             print("'INFO_INVENTÁRIO DE RISCOS' encontrado no arquivo de destino. Substituindo conteúdo.")
             destino_range = find_destino.Parent
             destino_range.Text = ""  # Limpar o conteúdo existente
+            time.sleep(5)  # Pausa para garantir que o conteúdo seja colado corretamente
 
-            # Colar o conteúdo copiado
-            destino_range.PasteSpecial(DataType=2) 
+            # Colar o conteúdo copiado mantendo a formatação
+            try:
+                print("Tentando colar com PasteSpecial...")
+                destino_range.Paste()
+            except pywintypes.com_error:
+                print("PasteSpecial falhou, tentando Paste normal...")
+                destino_range.PasteSpecial(DataType=22)
+
             time.sleep(1)  # Pausa para garantir que o conteúdo seja colado corretamente
             print("Conteúdo copiado e colado com sucesso.")
 

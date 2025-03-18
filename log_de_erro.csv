@@ -962,3 +962,51 @@ AttributeError: 'NoneType' object has no attribute 'replace'
                   ^^^^^^^^^^^^^^^^^^^
 AttributeError: 'NoneType' object has no attribute 'replace'
 
+
+17-03-2025 16:12 ######################
+
+            Descr. erro: Traceback (most recent call last):
+  File "c:\Users\Gabriel\Downloads\PGR\pgr.py", line 33, in main
+    rtf = Doc_Rtf(file_base_rtf)
+          ^^^^^^^^^^^^^^^^^^^^^^
+  File "c:\Users\Gabriel\Downloads\PGR\src\functions.py", line 1068, in __init__
+    self.tables = self.doc_rtf_to_dataframe(file_base_rtf)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: source_file is not a valid path
+
+
+17-03-2025 16:32 ######################
+
+            Descr. erro: Traceback (most recent call last):
+  File "c:\Users\Gabriel\Downloads\PGR\pgr.py", line 33, in main
+    rtf = Doc_Rtf(file_base_rtf)
+          ^^^^^^^^^^^^^^^^^^^^^^
+  File "c:\Users\Gabriel\Downloads\PGR\src\functions.py", line 1068, in __init__
+    self.tables = self.doc_rtf_to_dataframe(file_base_rtf)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: source_file is not a valid path
+
+
+17-03-2025 16:34 ######################
+
+            Descr. erro: Traceback (most recent call last):
+  File "c:\Users\Gabriel\Downloads\PGR\pgr.py", line 33, in main
+    rtf = Doc_Rtf(file_base_rtf)
+          ^^^^^^^^^^^^^^^^^^^^^^
+  File "c:\Users\Gabriel\Downloads\PGR\src\functions.py", line 1068, in __init__
+    self.tables = self.doc_rtf_to_dataframe(file_base_rtf)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: source_file is not a valid path
+
+
+17-03-2025 19:00 ######################
+
+            Descr. erro: Traceback (most recent call last):
+  File "c:\Users\Gabriel\Downloads\PGR\pgr.py", line 33, in main
+    rtf = Doc_Rtf(file_base_rtf)
+          ^^^^^^^^^^^^^^^^^^^^^^
+  File "c:\Users\Gabriel\Downloads\PGR\src\functions.py", line 1038, in __init__
+    self.tables = self.doc_rtf_to_dataframe(file_base_rtf)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: source_file is not a valid path
+
